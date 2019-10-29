@@ -1,11 +1,9 @@
-FROM python:2.7
-RUN apt-get update
-RUN virtualenv --no-site-packages env
-WORKDIR opt/app
-RUN apt-get install vim
+FROM python:latest
+RUN apt-get update  && apt-get install vim -y
 COPY app ./opt/app
-COPY ./requirements.txt /app/requirements.txt
-
-
-RUN sudo pip install -r requiments.txt
+COPY requirements.txt start.sh ./opt/app/
+RUN pip install -r  ./opt/app/requirements.txt
+WORKDIR ./opt/app/
+RUN  ls && chmod +x start.sh
+RUN ./start.sh
 
